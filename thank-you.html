@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You - Trendify</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        .thank-you-container {
+            text-align: center;
+            padding: 100px 20px;
+            min-height: 60vh;
+            max-width: 900px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .thank-you-container h1 {
+            font-size: 3em;
+            color: var(--accent-color);
+            margin-bottom: 20px;
+        }
+        .thank-you-container p {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+        }
+        .order-details {
+            margin-bottom: 40px;
+        }
+        /* Order Tracking Timeline */
+        .order-tracking-container {
+            width: 100%;
+            margin-top: 40px;
+        }
+        .order-tracking-container h2 {
+            font-size: 1.8em;
+            margin-bottom: 30px;
+        }
+        .tracking-timeline {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            text-align: left;
+        }
+        .tracking-timeline::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 5%;
+            right: 5%;
+            height: 4px;
+            background-color: var(--card-border);
+            z-index: -1;
+        }
+        .tracking-timeline::after {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 5%;
+            width: 0; /* Initially 0, will be animated by JS */
+            height: 4px;
+            background-color: var(--accent-color);
+            z-index: -1;
+            transition: width 1s ease-in-out;
+        }
+        .tracking-step {
+            position: relative;
+            width: 25%;
+        }
+        .tracking-step .step-icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: var(--card-border);
+            border: 3px solid var(--bg-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--text-color);
+            margin-bottom: 10px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .tracking-step.completed .step-icon {
+            background-color: var(--accent-color);
+            color: #fff;
+        }
+        .tracking-step .step-label {
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+        .tracking-step .step-info {
+            font-size: 0.8em;
+            color: #777;
+        }
+        .delivery-estimate {
+            margin-top: 40px;
+            font-size: 1.1em;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="logo">Trendify</a>
+        <nav class="navigation">
+            <a href="index.html#home">Home</a>
+            <a href="index.html#shop">Shop</a>
+            <a href="index.html#about">About</a>
+            <a href="index.html#contact">Contact</a>
+        </nav>
+        <div class="header-right">
+            <div class="header-icons">
+                <a href="#" id="theme-toggle-btn" aria-label="Toggle Theme"><i class="fas fa-sun"></i></a>
+            </div>
+            <div class="fas fa-bars" id="menu-btn"></div>
+        </div>
+    </header>
+
+    <main>
+        <div class="thank-you-container">
+            <h1>Thank You!</h1>
+            <div class="order-details">
+                <p>Your order has been placed successfully.</p>
+                <p>Order Number: <strong id="order-number">#TREND-12345</strong></p>
+            </div>
+
+            <div class="order-tracking-container">
+                <h2>Track Your Order</h2>
+                <div class="tracking-timeline">
+                    <div class="tracking-step" data-step="1">
+                        <div class="step-icon"><i class="fas fa-check"></i></div>
+                        <div class="step-label">Order Placed</div>
+                        <div class="step-info" id="order-placed-date"></div>
+                    </div>
+                    <div class="tracking-step" data-step="2">
+                        <div class="step-icon"><i class="fas fa-box"></i></div>
+                        <div class="step-label">Shipped</div>
+                        <div class="step-info">From Mumbai, IN</div>
+                    </div>
+                    <div class="tracking-step" data-step="3">
+                        <div class="step-icon"><i class="fas fa-truck"></i></div>
+                        <div class="step-label">Out for Delivery</div>
+                    </div>
+                    <div class="tracking-step" data-step="4">
+                        <div class="step-icon"><i class="fas fa-home"></i></div>
+                        <div class="step-label">Delivered</div>
+                        <div class="step-info" id="delivered-date"></div>
+                    </div>
+                </div>
+                <p class="delivery-estimate">Estimated Delivery: <span id="estimated-delivery"></span></p>
+            </div>
+
+            <a href="index.html" class="btn">Return to Homepage</a>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <h3>Trendify</h3>
+            <p>Your one-stop shop for the latest fashion trends.</p>
+            <ul class="socials">
+                <li><a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
+                <li><a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a></li>
+                <li><a href="https://www.instagram.com/piyush.rathi7" target="_blank"><i class="fab fa-instagram"></i></a></li>
+            </ul>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Trendify. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Generate a random order number for demonstration
+            const randomOrderSuffix = Math.floor(10000 + Math.random() * 90000);
+            document.getElementById('order-number').textContent = `#TREND-${randomOrderSuffix}`;
+
+            // Set current date for "Order Placed"
+            const today = new Date();
+            document.getElementById('order-placed-date').textContent = today.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+
+            // Calculate estimated delivery date (e.g., 5 days from now)
+            const deliveryDate = new Date();
+            deliveryDate.setDate(today.getDate() + 5);
+            document.getElementById('estimated-delivery').textContent = deliveryDate.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
+
+            // --- Real-time Tracking Simulation ---
+            const timeline = document.querySelector('.tracking-timeline');
+            const progressBar = timeline.style;
+
+            const steps = [
+                { step: 1, delay: 1000, progress: '0%' },      // Order Placed
+                { step: 2, delay: 3000, progress: '33%' },     // Shipped
+                { step: 3, delay: 5000, progress: '66%' },     // Out for Delivery
+                { step: 4, delay: 7000, progress: '100%' }     // Delivered
+            ];
+
+            steps.forEach(({ step, delay, progress }) => {
+                setTimeout(() => {
+                    // Mark the step as completed
+                    const stepElement = document.querySelector(`.tracking-step[data-step="${step}"]`);
+                    if (stepElement) {
+                        stepElement.classList.add('completed');
+                    }
+
+                    // Update the progress bar width
+                    timeline.style.setProperty('--progress-width', progress);
+                    document.querySelector('.tracking-timeline::after').style.width = progress;
+
+                    if (step === 4) { // If it's the final step
+                        document.getElementById('delivered-date').textContent = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                    }
+                }, delay);
+            });
+
+            // --- Save Address to User Profile ---
+            const isLoggedIn = sessionStorage.getItem('loggedIn') === 'true';
+            const lastAddressJSON = sessionStorage.getItem('lastShippingAddress');
+            const lastOrderCartJSON = sessionStorage.getItem('lastOrderCart');
+
+            if (isLoggedIn && lastAddressJSON) {
+                const user = JSON.parse(sessionStorage.getItem('user'));
+                const lastAddress = JSON.parse(lastAddressJSON);
+
+                // Add or update the address in the user object
+                user.address = lastAddress;
+
+                // --- Save Order History ---
+                if (lastOrderCartJSON) {
+                    const orderItems = JSON.parse(lastOrderCartJSON);
+                    const orderTotal = orderItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                    const newOrder = {
+                        id: document.getElementById('order-number').textContent,
+                        date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
+                        total: orderTotal.toFixed(2),
+                        items: orderItems
+                    };
+
+                    if (!user.orders) {
+                        user.orders = []; // Initialize order history if it doesn't exist
+                    }
+                    user.orders.unshift(newOrder); // Add new order to the beginning of the list
+                }
+
+                // Save the updated user object back to sessionStorage
+                sessionStorage.setItem('user', JSON.stringify(user));
+                sessionStorage.removeItem('lastShippingAddress'); // Clean up
+                sessionStorage.removeItem('lastOrderCart'); // Clean up
+            }
+        });
+    </script>
+
+    <!-- Start of Live Chat Widget Snippet -->
+    <!-- 
+      IMPORTANT: This is an EXAMPLE snippet. 
+      1. Sign up for a free live chat service (e.g., Tawk.to).
+      2. Get your unique JavaScript snippet from their dashboard.
+      3. Replace the code below with your snippet.
+    -->
+    <script type="text/javascript">
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    (function(){
+    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+    s1.async=true;
+    s1.src='https://embed.tawk.to/600000000000000000000000/1f1f1f1f1'; // <-- Replace with your real Tawk.to SRC
+    s1.charset='UTF-8';
+    s1.setAttribute('crossorigin','*');
+    s0.parentNode.insertBefore(s1,s0);
+    })();
+    </script>
+    <!--End of Live Chat Widget Snippet-->
+</body>
+</html>

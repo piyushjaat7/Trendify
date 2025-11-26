@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details - Trendify</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        .product-detail-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 50px;
+            max-width: 1200px;
+            margin: 150px auto 50px;
+            padding: 20px;
+        }
+        .product-image-section {
+            flex: 1;
+            min-width: 300px;
+        }
+        .product-image-section img {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .product-info-section {
+            flex: 1.5;
+            min-width: 300px;
+        }
+        .product-info-section h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+        .product-info-section .price {
+            font-size: 2em;
+            color: var(--accent-color);
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+        .product-info-section .description {
+            font-size: 1.1em;
+            line-height: 1.8;
+            margin-bottom: 40px;
+        }
+        #product-detail-add-to-cart {
+            padding: 15px 40px;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="logo">Trendify</a>
+        <nav class="navigation">
+            <a href="index.html#home">Home</a>
+            <a href="index.html#shop">Shop</a>
+            <a href="index.html#about">About</a>
+            <a href="index.html#contact">Contact</a>
+        </nav>
+        <div class="header-right">
+            <div class="header-icons">
+                <a href="#" id="theme-toggle-btn" aria-label="Toggle Theme"><i class="fas fa-sun"></i></a>
+            </div>
+            <div class="fas fa-bars" id="menu-btn"></div>
+        </div>
+    </header>
+
+    <main>
+        <div id="product-detail-content" class="product-detail-container">
+            <!-- Content will be loaded by product-detail.js -->
+            <p>Loading product...</p>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <h3>Trendify</h3>
+            <p>Your one-stop shop for the latest fashion trends.</p>
+            <ul class="socials">
+                <li><a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
+                <li><a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a></li>
+                <li><a href="https://www.instagram.com/piyush.rathi7" target="_blank"><i class="fab fa-instagram"></i></a></li>
+            </ul>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Trendify. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- script.js is needed for cart functionality -->
+    <script src="script.js"></script>
+    <!-- product-detail.js will load the product data -->
+    <script src="product-detail.js"></script>
+
+    <!-- Start of Live Chat Widget Snippet -->
+    <!-- 
+      IMPORTANT: This is an EXAMPLE snippet. 
+      1. Sign up for a free live chat service (e.g., Tawk.to).
+      2. Get your unique JavaScript snippet from their dashboard.
+      3. Replace the code below with your snippet.
+    -->
+    <script type="text/javascript">
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    (function(){
+    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+    s1.async=true;
+    s1.src='https://embed.tawk.to/600000000000000000000000/1f1f1f1f1'; // <-- Replace with your real Tawk.to SRC
+    s1.charset='UTF-8';
+    s1.setAttribute('crossorigin','*');
+    s0.parentNode.insertBefore(s1,s0);
+    })();
+    </script>
+    <!--End of Live Chat Widget Snippet-->
+</body>
+</html>

@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - Trendify</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        .profile-container {
+            max-width: 900px;
+            margin: 120px auto 50px;
+            padding: 40px;
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            min-height: 50vh;
+        }
+        .profile-container h1 {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .profile-section {
+            margin-bottom: 30px;
+        }
+        .profile-section h2 {
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .profile-details p {
+            font-size: 1.1em;
+            line-height: 1.8;
+            margin: 5px 0;
+        }
+        .profile-details .address-block {
+            background-color: var(--bg-color);
+            padding: 15px;
+            border-radius: 5px;
+        }
+        .order-history-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .order-history-item {
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            padding: 20px;
+        }
+        .order-history-item-header {
+            display: flex;
+            justify-content: space-between;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .profile-details strong {
+            color: var(--primary-color);
+        }
+        .order-history-item {
+            padding: 15px;
+            border: 1px solid var(--card-border);
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+        .qr-code-container img {
+            max-width: 180px;
+            height: auto;
+            margin-top: 10px;
+            border: 1px solid var(--card-border);
+            padding: 5px;
+            background-color: white; /* To ensure QR code is scannable in dark mode */
+        }
+        /* Styles for the edit form */
+        .profile-form .form-group {
+            margin-bottom: 20px;
+        }
+        .profile-form label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        .profile-form input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--card-border);
+            border-radius: 5px;
+            font-size: 1em;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+        .profile-form input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+        .profile-actions {
+            margin-top: 30px;
+            display: flex;
+            gap: 15px;
+        }
+        .profile-actions .btn-secondary {
+            background-color: #6c757d;
+        }
+        .profile-actions .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="logo">Trendify</a>
+        <nav class="navigation">
+            <a href="index.html#home">Home</a>
+            <a href="index.html#shop">Shop</a>
+            <a href="index.html#about">About</a>
+            <a href="index.html#contact">Contact</a>
+        </nav>
+        <div class="header-right">
+            <div class="header-icons">
+                <a href="#" id="theme-toggle-btn" aria-label="Toggle Theme"><i class="fas fa-sun"></i></a>
+            </div>
+            <div class="fas fa-bars" id="menu-btn"></div>
+        </div>
+    </header>
+
+    <main>
+        <div id="profile-content" class="profile-container">
+            <!-- Content will be loaded by profile.js -->
+            <p>Loading profile...</p>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <h3>Trendify</h3>
+            <p>Your one-stop shop for the latest fashion trends.</p>
+            <ul class="socials">
+                <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                <li><a href="https://www.instagram.com/piyush.rathi7" target="_blank"><i class="fab fa-instagram"></i></a></li>
+            </ul>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Trendify. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="profile.js"></script>
+    <script>
+    // This script replaces the need for an external profile.js for now
+    document.addEventListener('DOMContentLoaded', () => {
+        const profileContent = document.getElementById('profile-content');
+        const isLoggedIn = sessionStorage.getItem('loggedIn') === 'true';
+
+        if (!isLoggedIn) {
+            // If not logged in, redirect to login page
+            window.location.href = 'index1.html';
+            return;
+        }
+
+        let user = JSON.parse(sessionStorage.getItem('user'));
+
+        // Function to render the main profile view
+        function renderProfileView() {
+            if (!user || !profileContent) return;
+
+            let addressHtml;
+            if (user.address) {
+                addressHtml = `
+                    <div class="address-block">
+                        <p>${user.address.fullName || ''}</p>
+                        <p>${user.address.address1 || ''}</p>
+                        ${user.address.address2 ? `<p>${user.address.address2}</p>` : ''}
+                        <p>${user.address.city || ''}, ${user.address.state || ''} ${user.address.postalCode || ''}</p>
+                        <p>${user.address.country || ''}</p>
+                        <p>Phone: ${user.address.phone || ''}</p>
+                    </div>
+                    <div class="profile-actions">
+                        <button id="edit-address-btn" class="btn">Edit Address</button>
+                    </div>
+                `;
+            } else {
+                addressHtml = `
+                    <p>No address on file. It will be saved after your first checkout.</p>
+                    <div class="profile-actions">
+                         <button id="add-address-btn" class="btn">Add Address</button>
+                    </div>
+                `;
+            }
+
+            const paymentInfo = user.paymentInfo || {};
+            const upiId = paymentInfo.upiId || '9812265677-2@axl';
+            const qrCodeSrc = paymentInfo.qrCodeSrc || `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi://pay?pa=${upiId}`;
+
+            let paymentHtml = `
+                <p><strong>Method:</strong> UPI (Unified Payments Interface)</p>
+                <p>You can use the QR code below for payments.</p>
+                <div class="qr-code-container">
+                    <img src="${qrCodeSrc}" alt="UPI QR Code">
+                    <p style="font-size: 0.9em; margin-top: 10px;">
+                        <strong>UPI ID:</strong> 
+                        <span id="upi-id">${upiId}</span>
+                    </p>
+                </div>
+                <div class="profile-actions">
+                    <button id="edit-payment-btn" class="btn">Edit Payment Method</button>
+                </div>
+            `;
+
+            let orderHistoryHtml = (user.orders && user.orders.length > 0)
+                ? user.orders.map(order => `
+                    <div class="order-history-item">
+                        <div class="order-history-item-header">
+                            <span>Order: ${order.id}</span>
+                            <span>Date: ${order.date}</span>
+                            <span>Total: $${order.total}</span>
+                        </div>
+                        <ul style="list-style-position: inside; padding-left: 10px; font-size: 0.9em;">
+                            ${order.items.map(item => `<li>${item.name} (x${item.quantity})</li>`).join('')}
+                        </ul>
+                    </div>
+                `).join('')
+                : '<p>You have no past orders.</p>';
+
+
+            profileContent.innerHTML = `
+                <h1>My Profile</h1>
+                <div class="profile-section">
+                    <h2>Account Details</h2>
+                    <div class="profile-details">
+                        <p><strong>Username:</strong> ${user.username || 'N/A'}</p>
+                        <p><strong>Name:</strong> ${user.name || 'N/A'}</p>
+                        <p><strong>Email:</strong> ${user.email || 'N/A'}</p>
+                    </div>
+                </div>
+                <div class="profile-section" id="address-section">
+                    <h2>Saved Shipping Address</h2>
+                    <div class="profile-details">
+                        ${addressHtml}
+                    </div>
+                </div>
+                <div class="profile-section" id="payment-section">
+                    <h2>Payment Method</h2>
+                    <div class="profile-details">
+                        ${paymentHtml}
+                    </div>
+                </div>
+                <div class="profile-section">
+                    <h2>Order History</h2>
+                    <div id="order-history-list" class="order-history-list">
+                        ${orderHistoryHtml}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Function to render the address edit form
+        function renderAddressEdit() {
+            const addressSection = document.getElementById('address-section');
+            if (!addressSection) return;
+
+            const addr = user.address || {}; // Use current address or empty object
+
+            addressSection.innerHTML = `
+                <h2>Edit Shipping Address</h2>
+                <form id="address-form" class="profile-form">
+                    <div class="form-group">
+                        <label for="fullName">Full Name</label>
+                        <input type="text" id="fullName" name="fullName" value="${addr.fullName || ''}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="address1">Address Line 1</label>
+                        <input type="text" id="address1" name="address1" value="${addr.address1 || ''}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="address2">Address Line 2 (Optional)</label>
+                        <input type="text" id="address2" name="address2" value="${addr.address2 || ''}">
+                    </div>
+                    <div class="form-group">
+                        <label for="city">City</label>
+                        <input type="text" id="city" name="city" value="${addr.city || ''}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="state">State / Province</label>
+                        <input type="text" id="state" name="state" value="${addr.state || ''}" required>
+                    </div>
+                     <div class="form-group">
+                        <label for="postalCode">Postal Code</label>
+                        <input type="text" id="postalCode" name="postalCode" value="${addr.postalCode || ''}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="country">Country</label>
+                        <input type="text" id="country" name="country" value="${addr.country || ''}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone" value="${addr.phone || ''}" required>
+                    </div>
+                    <div class="profile-actions">
+                        <button type="submit" class="btn">Save Address</button>
+                        <button type="button" id="cancel-edit-btn" class="btn btn-secondary">Cancel</button>
+                    </div>
+                </form>
+            `;
+        }
+
+        // Function to render the payment method edit form
+        function renderPaymentEdit() {
+            const paymentSection = document.getElementById('payment-section');
+            if (!paymentSection) return;
+
+            const paymentInfo = user.paymentInfo || {};
+            const upiId = paymentInfo.upiId || '9812265677-2@axl';
+
+            paymentSection.innerHTML = `
+                <h2>Edit Payment Method</h2>
+                <form id="payment-form" class="profile-form">
+                    <div class="form-group">
+                        <label for="upiId">UPI ID</label>
+                        <input type="text" id="upiId" name="upiId" value="${upiId}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="qrCodeFile">Upload New QR Code (Optional)</label>
+                        <input type="file" id="qrCodeFile" name="qrCodeFile" accept="image/*">
+                        <p style="font-size: 0.8em; color: #888; margin-top: 5px;">If you don't upload a new image, the QR code will be generated from your UPI ID.</p>
+                    </div>
+                    <div class="profile-actions">
+                        <button type="submit" class="btn">Save Payment Method</button>
+                        <button type="button" id="cancel-edit-btn" class="btn btn-secondary">Cancel</button>
+                    </div>
+                </form>
+            `;
+        }
+
+        // Event delegation for the entire profile container
+        profileContent.addEventListener('click', (e) => {
+            if (e.target.id === 'edit-address-btn' || e.target.id === 'add-address-btn') {
+                e.preventDefault();
+                renderAddressEdit();
+            }
+
+            if (e.target.id === 'edit-payment-btn') {
+                e.preventDefault();
+                renderPaymentEdit();
+            }
+
+            if (e.target.id === 'cancel-edit-btn') {
+                e.preventDefault();
+                renderProfileView(); // Re-render the original view
+            }
+        });
+
+        profileContent.addEventListener('submit', (e) => {
+            if (e.target.id === 'address-form') {
+                e.preventDefault();
+                const formData = new FormData(e.target);
+                const newAddress = Object.fromEntries(formData.entries());
+
+                // Update user object and save to sessionStorage
+                user.address = newAddress;
+                sessionStorage.setItem('user', JSON.stringify(user));
+
+                alert('Address updated successfully!');
+                renderProfileView(); // Go back to the display view
+            }
+
+            if (e.target.id === 'payment-form') {
+                e.preventDefault();
+                const upiId = document.getElementById('upiId').value;
+                const qrCodeFile = document.getElementById('qrCodeFile').files[0];
+
+                if (!user.paymentInfo) {
+                    user.paymentInfo = {};
+                }
+
+                user.paymentInfo.upiId = upiId;
+
+                if (qrCodeFile) {
+                    // A new file was uploaded, read it as a Data URL
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        user.paymentInfo.qrCodeSrc = event.target.result;
+                        sessionStorage.setItem('user', JSON.stringify(user));
+                        alert('Payment method updated successfully!');
+                        renderProfileView();
+                    };
+                    reader.readAsDataURL(qrCodeFile);
+                } else {
+                    // No new file, so we might need to clear the old custom one
+                    // and let it be auto-generated from the new UPI ID.
+                    user.paymentInfo.qrCodeSrc = null; // Let it be auto-generated
+                    sessionStorage.setItem('user', JSON.stringify(user));
+                    alert('Payment method updated successfully!');
+                    renderProfileView();
+                }
+            }
+        });
+
+        // Initial render of the profile page
+        renderProfileView();
+    });
+    </script>
+
+    <!-- Start of Live Chat Widget Snippet -->
+    <!-- 
+      IMPORTANT: This is an EXAMPLE snippet. 
+      1. Sign up for a free live chat service (e.g., Tawk.to).
+      2. Get your unique JavaScript snippet from their dashboard.
+      3. Replace the code below with your snippet.
+    -->
+    <script type="text/javascript">
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    (function(){
+    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+    s1.async=true;
+    s1.src='https://embed.tawk.to/600000000000000000000000/1f1f1f1f1'; // <-- Replace with your real Tawk.to SRC
+    s1.charset='UTF-8';
+    s1.setAttribute('crossorigin','*');
+    s0.parentNode.insertBefore(s1,s0);
+    })();
+    </script>
+    <!--End of Live Chat Widget Snippet-->
+</body>
+</html>
+                `;
+            }
+
+            profileContent.innerHTML = `
+                <h1>My Profile</h1>
+                <div class="profile-section">
+                    <h2>Account Details</h2>
+                    <div class="profile-details">
+                        <p><strong>Username:</strong> ${user.username || 'N/A'}</p>
+                        <p><strong>Name:</strong> ${user.name || 'N/A'}</p>
+                        <p><strong>Email:</strong> ${user.email || 'N/A'}</p>
+                    </div>
+                </div>
+                <div class="profile-section" id="address-section">
+                    <h2>Saved Shipping Address</h2>
+                    <div class="profile-details">
+                        ${addressHtml}
+                    </div>
+                </div>
+                <div class="profile-section">
+                    <h2>Payment Method</h2>
+                    <div class="profile-details">
+                        <p><strong>Method:</strong> UPI (Unified Payments Interface)</p>
+                        <p>You can use the QR code below for payments.</p>
+                        <div class="qr-code-container">
+                            <!-- TODO: Replace with your actual UPI QR code image and UPI ID -->
+                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi://pay?pa=your-upi-id@oksbi" alt="UPI QR Code">
+                            <p style="font-size: 0.9em; margin-top: 10px;">
+                                <strong>UPI ID:</strong> 
+                                <span id="upi-id">your-upi-id@oksbi</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="profile-section">
+                    <h2>Order History</h2>
+                    <div id="order-history-list" class="order-history-list">
+                        ${
+                            (user.orders && user.orders.length > 0)
+                            ? user.orders.map(order => `
+                                <div class="order-history-item">
+                                    <div class="order-history-item-header">
+                                        <span>Order: ${order.id}</span>
+                                        <span>Date: ${order.date}</span>
+                                        <span>Total: $${order.total}</span>
+                                    </div>
+                                    <ul style="list-style-position: inside; padding-left: 10px; font-size: 0.9em;">
+                                        ${order.items.map(item => `<li>${item.name} (x${item.quantity})</li>`).join('')}
+                                    </ul>
+                                </div>
+                            `).join('')
+                            : '<p>You have no past orders.</p>'
+                        }
+                    </div>
+                </div>
+            `;
+        }
+
+        // Function to render the address edit form
+        function renderAddressEdit() {
+            const addressSection = document.getElementById('address-section');
+            if (!addressSection) return;
+
+            const addr = user.address || {}; // Use current address or empty object
+
+            addressSection.innerHTML = `
+                <h2>Edit Shipping Address</h2>
+                <form id="address-form" class="profile-form">
+                    <div class="form-group">
+                        <label for="fullName">Full Name</label>
+                        <input type="text" id="fullName" name="fullName" value="${addr.fullName || ''}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="address1">Address Line 1</label>
+                        <input type="text" id="address1" name="address1" value="${addr.address1 || ''}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="address2">Address Line 2 (Optional)</label>
+                        <input type="text" id="address2" name="address2" value="${addr.address2 || ''}">
+                    </div>
+                    <div class="form-group">
+                        <label for="city">City</label>
+                        <input type="text" id="city" name="city" value="${addr.city || ''}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="state">State / Province</label>
+                        <input type="text" id="state" name="state" value="${addr.state || ''}" required>
+                    </div>
+                     <div class="form-group">
+                        <label for="postalCode">Postal Code</label>
+                        <input type="text" id="postalCode" name="postalCode" value="${addr.postalCode || ''}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="country">Country</label>
+                        <input type="text" id="country" name="country" value="${addr.country || ''}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone" value="${addr.phone || ''}" required>
+                    </div>
+                    <div class="profile-actions">
+                        <button type="submit" class="btn">Save Address</button>
+                        <button type="button" id="cancel-edit-btn" class="btn btn-secondary">Cancel</button>
+                    </div>
+                </form>
+            `;
+        }
+
+        // Event delegation for the entire profile container
+        profileContent.addEventListener('click', (e) => {
+            if (e.target.id === 'edit-address-btn' || e.target.id === 'add-address-btn') {
+                e.preventDefault();
+                renderAddressEdit();
+            }
+
+            if (e.target.id === 'cancel-edit-btn') {
+                e.preventDefault();
+                renderProfileView(); // Re-render the original view
+            }
+        });
+
+        profileContent.addEventListener('submit', (e) => {
+            if (e.target.id === 'address-form') {
+                e.preventDefault();
+                const formData = new FormData(e.target);
+                const newAddress = Object.fromEntries(formData.entries());
+
+                // Update user object and save to sessionStorage
+                user.address = newAddress;
+                sessionStorage.setItem('user', JSON.stringify(user));
+
+                alert('Address updated successfully!');
+                renderProfileView(); // Go back to the display view
+            }
+        });
+
+        // Initial render of the profile page
+        renderProfileView();
+    });
+    </script>
+
+    <!-- Start of Live Chat Widget Snippet -->
+    <!-- 
+      1. Sign up for a free live chat service like Tawk.to.
+      2. Get your unique JavaScript snippet from their dashboard.
+      3. Replace the content of this script tag with your snippet.
+    -->
+    <script type="text/javascript">
+    // This is a placeholder. Replace with your actual live chat script.
+    console.log("Live Chat Widget would be loaded here.");
+    </script>
+    <!--End of Live Chat Widget Snippet-->
+</body>
+</html>

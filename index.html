@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trendify - Your Fashion Destination</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        .product-card {
+            display: flex;
+            flex-direction: column;
+            height: 100%; /* Ensure card takes full height of grid cell */
+        }
+
+        .product-card img {
+            width: 100%;
+            aspect-ratio: 1 / 1; /* Make images square */
+            object-fit: cover; /* Cover the area, cropping if necessary */
+        }
+
+        .product-card h3 {
+            /* Optional: set a min-height if titles can wrap to multiple lines */
+            min-height: 48px; /* Adjust based on your font size and desired line count */
+        }
+
+        .product-card .add-to-cart-btn {
+            margin-top: auto; /* This is the key change to push the button down */
+        }
+
+        /* Styles for search icon */
+        .search-container {
+            position: relative;
+        }
+        .search-container .search-icon {
+            position: absolute;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+            color: #777;
+            cursor: pointer;
+        }
+        #product-search {
+            padding-right: 45px; /* Add padding to prevent text from overlapping with icon */
+        }
+
+        /* About Section */
+        .about-section {
+            padding: 80px 100px;
+            background-color: var(--bg-color);
+            transition: background-color 0.3s ease;
+        }
+
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .about-content h2 {
+            font-size: 2.5em;
+            margin-bottom: 30px;
+        }
+
+        .about-content p {
+            font-size: 1.1em;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="logo">Trendify</a>
+        <nav class="navigation">
+            <a href="#home">Home</a>
+            <a href="#shop">Shop</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+            <a href="profile.html" id="profile-link" style="display: none;">Profile</a>
+            <a href="index1.html" id="login-link">Login</a>
+            <a href="#" id="logout-link" style="display: none;">Logout</a>
+        </nav>
+        <div class="header-right">
+            <div class="header-icons">
+                <a href="#" id="search-btn" aria-label="Search"><i class="fas fa-search"></i></a>
+                <a href="#" id="theme-toggle-btn" aria-label="Toggle Theme"><i class="fas fa-sun"></i></a>
+                <!-- <a href="#" id="user-btn" aria-label="User Account"><i class="fas fa-user"></i></a> -->
+                <a href="#" id="cart-btn" aria-label="Cart">
+                    <i class="fas fa-shopping-cart"></i><span id="cart-count">0</span>
+                </a>
+            </div>
+            <div class="fas fa-bars" id="menu-btn"></div>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero" id="home">
+            <div class="hero-content">
+                <h2 id="welcome-message" style="display: none;"></h2>
+                <h1>Discover Your Style</h1>
+                <p>Explore the latest trends and find your perfect look with Trendify.</p>
+                <a href="#shop" class="btn">Shop Now</a>
+            </div>
+        </section>
+
+        <section class="featured-products" id="shop">
+            <h2>Featured Products</h2>
+            <div class="search-container">
+                <input type="text" id="product-search" placeholder="Search for products...">
+                <i class="fas fa-search search-icon"></i>
+            </div>
+            <div class="product-grid">
+                <!-- Product 1 -->
+                <div class="product-card">
+                    <a href="product-detail.html?id=classic-denim-jacket">
+                        <img src="denim-jackets.png" alt="Classic Denim Jacket">
+                    </a>
+                    <a href="product-detail.html?id=classic-denim-jacket">
+                        <h3>Classic Denim Jacket</h3>
+                    </a>
+                    <p class="price">$79.99</p>
+                    <button class="btn add-to-cart-btn" data-id="classic-denim-jacket" data-name="Classic Denim Jacket" data-price="79.99">Add to Cart</button>
+                </div>
+                <!-- Product 2 -->
+                <div class="product-card">
+                    <a href="product-detail.html?id=striped-cotton-tee">
+                        <img src="striped-cotton-tee.png" alt="Striped Cotton Tee">
+                    </a>
+                    <a href="product-detail.html?id=striped-cotton-tee">
+                        <h3>Striped Cotton Tee</h3>
+                    </a>
+                    <p class="price">$29.99</p>
+                    <button class="btn add-to-cart-btn" data-id="striped-cotton-tee" data-name="Striped Cotton Tee" data-price="29.99">Add to Cart</button>
+                </div>
+                <!-- Product 3 -->
+                <div class="product-card">
+                    <a href="product-detail.html?id=leather-ankle-boots">
+                        <img src="leather-ankle-boots.png" alt="Leather Ankle Boots">
+                    </a>
+                    <a href="product-detail.html?id=leather-ankle-boots">
+                        <h3>Leather Ankle Boots</h3>
+                    </a>
+                    <p class="price">$120.00</p>
+                    <button class="btn add-to-cart-btn" data-id="leather-ankle-boots" data-name="Leather Ankle Boots" data-price="120.00">Add to Cart</button>
+                </div>
+                <!-- Product 4 -->
+                <div class="product-card">
+                    <a href="product-detail.html?id=minimalist-watch">
+                        <img src="minimalist-watch.png" alt="Minimalist Watch">
+                    </a>
+                    <a href="product-detail.html?id=minimalist-watch">
+                        <h3>Minimalist Watch</h3>
+                    </a>
+                    <p class="price">$99.50</p>
+                    <button class="btn add-to-cart-btn" data-id="minimalist-watch" data-name="Minimalist Watch" data-price="99.50">Add to Cart</button>
+                </div>
+                <!-- Product 5 -->
+                <div class="product-card">
+                    <a href="product-detail.html?id=slim-fit-chinos">
+                        <img src="slim-fit-chinos.png" alt="Slim Fit Chinos">
+                    </a>
+                    <a href="product-detail.html?id=slim-fit-chinos">
+                        <h3>Slim Fit Chinos</h3>
+                    </a>
+                    <p class="price">$65.00</p>
+                    <button class="btn add-to-cart-btn" data-id="slim-fit-chinos" data-name="Slim Fit Chinos" data-price="65.00">Add to Cart</button>
+                </div>
+                <!-- Product 6 -->
+                <div class="product-card">
+                    <a href="product-detail.html?id=wool-scarf">
+                        <img src="wool-scarf.png" alt="Wool Scarf">
+                    </a>
+                    <a href="product-detail.html?id=wool-scarf">
+                        <h3>Wool Scarf</h3>
+                    </a>
+                    <p class="price">$35.00</p>
+                    <button class="btn add-to-cart-btn" data-id="wool-scarf" data-name="Wool Scarf" data-price="35.00">Add to Cart</button>
+                </div>
+                <!-- Product 7 -->
+                <div class="product-card">
+                    <a href="product-detail.html?id=suede-loafers">
+                        <img src="suede-loafers.png" alt="Suede Loafers">
+                    </a>
+                    <a href="product-detail.html?id=suede-loafers">
+                        <h3>Suede Loafers</h3>
+                    </a>
+                    <p class="price">$85.99</p>
+                    <button class="btn add-to-cart-btn" data-id="suede-loafers" data-name="Suede Loafers" data-price="85.99">Add to Cart</button>
+                </div>
+                <!-- Product 8 -->
+                <div class="product-card">
+                    <a href="product-detail.html?id=aviator-sunglasses">
+                        <img src="aviator-sunglasses.png" alt="Aviator Sunglasses">
+                    </a>
+                    <a href="product-detail.html?id=aviator-sunglasses">
+                        <h3>Aviator Sunglasses</h3>
+                    </a>
+                    <p class="price">$45.50</p>
+                    <button class="btn add-to-cart-btn" data-id="aviator-sunglasses" data-name="Aviator Sunglasses" data-price="45.50">Add to Cart</button>
+                </div>
+                <!-- Product 9 -->
+                <div class="product-card">
+                    <a href="product-detail.html?id=bohemian-maxi-dress">
+                        <img src="bohemian-maxi-dress.png" alt="Bohemian Maxi Dress">
+                    </a>
+                    <a href="product-detail.html?id=bohemian-maxi-dress">
+                        <h3>Bohemian Maxi Dress</h3>
+                    </a>
+                    <p class="price">$89.99</p>
+                    <button class="btn add-to-cart-btn" data-id="bohemian-maxi-dress" data-name="Bohemian Maxi Dress" data-price="89.99">Add to Cart</button>
+                </div>
+                <!-- Product 10 -->
+                <div class="product-card">
+                    <a href="product-detail.html?id=canvas-backpack">
+                        <img src="canvas-backpack.png" alt="Canvas Backpack">
+                    </a>
+                    <a href="product-detail.html?id=canvas-backpack">
+                        <h3>Canvas Backpack</h3>
+                    </a>
+                    <p class="price">$59.99</p>
+                    <button class="btn add-to-cart-btn" data-id="canvas-backpack" data-name="Canvas Backpack" data-price="59.99">Add to Cart</button>
+                </div>
+                <!-- Product 11 -->
+                <div class="product-card">
+                    <a href="product-detail.html?id=knit-beanie">
+                        <img src="knit-beanie.png" alt="Knit Beanie">
+                    </a>
+                    <a href="product-detail.html?id=knit-beanie">
+                        <h3>Knit Beanie</h3>
+                    </a>
+                    <p class="price">$24.50</p>
+                    <button class="btn add-to-cart-btn" data-id="knit-beanie" data-name="Knit Beanie" data-price="24.50">Add to Cart</button>
+                </div>
+                <!-- Product 12 -->
+                <div class="product-card">
+                    <a href="product-detail.html?id=vintage-graphic-tee">
+                        <img src="vintage-graphic-tee.png" alt="Vintage Graphic Tee">
+                    </a>
+                    <a href="product-detail.html?id=vintage-graphic-tee">
+                        <h3>Vintage Graphic Tee</h3>
+                    </a>
+                    <p class="price">$32.00</p>
+                    <button class="btn add-to-cart-btn" data-id="vintage-graphic-tee" data-name="Vintage Graphic Tee" data-price="32.00">Add to Cart</button>
+                </div>
+            </div>
+            <p id="no-products-message" style="display: none;">No products found matching your search.</p>
+        </section>
+
+        <section class="about-section" id="about">
+            <div class="about-content">
+                <h2>About Trendify</h2>
+                <p>Welcome to Trendify, where fashion meets passion. We are committed to bringing you the latest trends with a focus on quality, style, and sustainability.</p>
+                <p>Our mission is to empower you to express your unique style with confidence. We carefully curate our collections to ensure you find pieces that you'll love and wear for seasons to come.</p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-header">
+            <h3>Your Cart</h3>
+            <button class="close-btn" id="close-cart-btn">&times;</button>
+        </div>
+        <div class="cart-items" id="cart-items">
+            <!-- Cart items will be injected here by JavaScript -->
+            <p class="cart-empty">Your cart is empty.</p>
+        </div>
+        <div class="cart-footer">
+            <div class="total">
+                <strong>Total:</strong> <span id="cart-total">$0.00</span>
+            </div>
+            <a href="checkout.html" class="btn checkout-btn">Proceed to Checkout</a>
+        </div>
+    </div>
+    <div class="cart-overlay" id="cart-overlay"></div>
+
+    <footer id="contact">
+        <div class="footer-content">
+            <div class="footer-section about">
+                <h3>About Trendify</h3>
+                <p>Welcome to Trendify, where fashion meets passion. We are committed to bringing you the latest trends with a focus on quality, style, and sustainability.</p>
+            </div>
+            <div class="footer-section links">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#shop">Shop</a></li>
+                    <li><a href="profile.html">My Profile</a></li>
+                    <li><a href="checkout.html">Checkout</a></li>
+                </ul>
+            </div>
+            <div class="footer-section contact-info">
+                <h3>Contact Us</h3>
+                <p>For any issues or inquiries, please reach out to us.</p>
+                <p><strong>Phone:</strong> +919812265677</p>
+            </div>
+            <div class="footer-section social">
+                <h3>Follow Us</h3>
+                <p>Stay connected on our social networks.</p>
+                <div class="socials">
+                    <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.instagram.com/piyush.rathi7" target="_blank"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Trendify. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <a href="#" class="back-to-top-btn" id="back-to-top-btn" aria-label="Back to top"><i class="fas fa-arrow-up"></i></a>
+
+    <!-- Toast Notification -->
+    <div id="toast-notification" class="toast-notification">Item added to cart!</div>
+
+    <script src="script.js"></script>
+
+    <!-- Start of Live Chat Widget Snippet -->
+    <!-- 
+      IMPORTANT: This is an EXAMPLE snippet. 
+      1. Sign up for a free live chat service (e.g., Tawk.to).
+      2. Get your unique JavaScript snippet from their dashboard.
+      3. Replace the code below with your snippet.
+    -->
+    <script type="text/javascript">
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    (function(){
+    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+    s1.async=true;
+    s1.src='https://embed.tawk.to/600000000000000000000000/1f1f1f1f1'; // <-- Replace with your real Tawk.to SRC
+    s1.charset='UTF-8';
+    s1.setAttribute('crossorigin','*');
+    s0.parentNode.insertBefore(s1,s0);
+    })();
+    </script>
+    <!--End of Live Chat Widget Snippet-->
+</body>
+</html>
+</html>
